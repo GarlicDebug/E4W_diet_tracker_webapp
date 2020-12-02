@@ -5,7 +5,8 @@ class HomePageView(TemplateView):
     template_name = 'home.html'
 
 class SearchResultsView(ListView):
-    #model = ........
+    #model = ........webscraping results
     template_name = 'search_results.html'
+    #return render_to_response('search_results.html', {'dictionary': })
 
 
