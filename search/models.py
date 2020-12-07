@@ -5,9 +5,11 @@ import requests
 import csv
 import json
 import pandas as pd
+import re
 
 
 # Create your models here.
+
 #Get the food nutrition database here and pass to views.py
 #getting the search value
 form = cgi.FieldStorage()
@@ -33,18 +35,18 @@ class Dict2Class(object):
             setattr(self, key, my_dict              [key])
     def __repr__(self):
         return "<dict2obj: %s="">" % self.__dict__
-
+print("whatever")
 
 #populate class with the dict
 df = pd.DataFrame.from_dict(food_dict['foodNutrients'][0])
-for i in range(len(food_dict['foodNutrients'])):
+for i in range(1, len(food_dict['foodNutrients'])):
     df = df.append(pd.DataFrame.from_dict(food_dict['foodNutrients'][i]))
-print(df.head(25))
+#print(df.head(25))
 
 dfgroup = df.groupby('id')
 row1 = []
 for n, g in dfgroup:
-    row1.append(g['nutrient']['name'])
+    row1.append(str(g['nutrient']['name']))
 row2 = []
 for n, g in dfgroup:
     row2.append(g['nutrient']['number'])
