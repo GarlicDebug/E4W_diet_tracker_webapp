@@ -1,0 +1,27 @@
+<h1>this is the meals page.</h1>
+
+<ul>
+    {% for all_meals in all_items %}
+        <li>
+            <table>
+                <tr>
+                    <th>{{ all_meals.date }}</th>
+                    <th>{{ all_meals.time }}</th>
+                    <th>{{ all_meals.description }}</th>
+                </tr>
+            </table>
+            <form action="/deleteMeal/{{all_meals.id}}"
+                  style="display: inline;"
+                  method="post">{% csrf_token %}
+                <input type="submit" value="Delete"/>
+            </form>
+        </li>
+    {% endfor %}
+</ul>
+
+<form action="/addMeal/" method="post">{% csrf_token %}
+    <input type="text" name="date"/>
+    <input type="text" name="time"/>
+    <input type="text" name="description"/>
+    <input type="submit" value="Add"/>
+</form>
