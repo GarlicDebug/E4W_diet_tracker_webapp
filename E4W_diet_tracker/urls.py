@@ -16,10 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from meal_log.views import meal_logView, addMeal, deleteMeal
+from user_login.views import registerPage, loginPage, logoutUser
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('meallog/', meal_logView),
+    path('meallog/', meal_logView, name='meals'),
     path('addMeal/', addMeal),
-    path('deleteMeal/<int:todo_id>', deleteMeal)
+    path('deleteMeal/<int:todo_id>', deleteMeal),
+    path('register/', registerPage, name='register'),
+    path('login/', loginPage, name='login'),
+    path('logout/', logoutUser, name='logout')
 ]
