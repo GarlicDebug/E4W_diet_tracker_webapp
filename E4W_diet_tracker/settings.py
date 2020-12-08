@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'meal_log',
+    'user_login',
 ]
 
 MIDDLEWARE = [
