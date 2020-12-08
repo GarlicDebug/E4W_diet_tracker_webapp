@@ -15,7 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from meal_log.views import meal_logView, addMeal, deleteMeal
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('meallog/', meal_logView),
+    path('addMeal/', addMeal),
+    path('deleteMeal/<int:todo_id>', deleteMeal)
 ]
