@@ -8,6 +8,9 @@
     <h1>
         Homepage
     </h1>
+    <form action="{%  url 'login' %}">
+        <input type="submit" value="Login">
+    </form>
     <form action="{% url 'search_results'%}" method="get">
         Search: <input name="searchValue" type="text" placeholder="Search...">
         <!-- <button type="submit" value="Submit"><i class="fa fa-search"></i></button>
