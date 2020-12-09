@@ -26,7 +26,9 @@ class SearchResultsView(ListView):
             product_amount=df['Amount'][count],
             product_unit=df['Unit'][count],
         ) for count in range(len(df['Nutrient']))]
+        print("howdy")
         modelfinal = Product.objects.bulk_create(model_instances)
+        print("yolo")
         print(modelfinal)
         #return render('search_results.html', {'df': df})
         return model_instances

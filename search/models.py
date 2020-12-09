@@ -1,10 +1,6 @@
 from django.db import models
 import cgi
 import os
-import requests
-import csv
-import json
-import re
 
 class Product(models.Model):
     product_nutrient = models.TextField()
