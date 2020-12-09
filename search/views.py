@@ -11,30 +11,26 @@ class HomePageView(TemplateView):
 class SearchResultsView(ListView):
     template_name = 'search_results.html'
     model = Product
-    def get_queryset(self):
+    #if TemplateView use the method below
+    """def get(self, *args, **kwargs):
         query = self.request.GET.get('searchValue')
         print(query)
         df = getResults(query)
-        #df = str(df.to_html())
-        return render('search_results.html', {'df': df.to_html()})
-    """    
+        return render('search_results.html', {'df': df.to_html()})"""
     def get_queryset(self):
-        query = self.request.GET.get('searchValue') #HERE IS WHERE WE GET THE VALUE
-
-        dffinal = getResults(query)                  #FROM THE SEARCH BAR
-
-        #dffinal is a dataframe
-
-        #EVERYTHING'S GOOD UPTO HERE
-        context = {'table_content': str(dffinal.to_html())}
-        df = dffinal.to_html()
-        return render('search_results.html', )
-        #return render(dffinal.to_html(), 'search_results.html')"""
-    """def get_queryset(self):
         query = self.request.GET.get('searchValue')
-        query = getResults(query)
-        context = {'table_content': query.to_html()}
-        return render('search_results.html', context)"""
+        df = getResults(query)
+        df = df.to_dict()
+        model_instances = [Product(
+            product_nutrient=df['Nutrient'][count],
+            product_amount=df['Amount'][count],
+            product_unit=df['Unit'][count],
+        ) for count in range(len(df['Nutrient']))]
+        modelfinal = Product.objects.bulk_create(model_instances)
+        print(modelfinal)
+        #return render('search_results.html', {'df': df})
+        return model_instances
+
     """
     def mainview(request):
 
@@ -43,9 +39,6 @@ class SearchResultsView(ListView):
         data = getResults(query)
         context = { 'df': data.to_html}
         return render(request, 'templates/search_results.html', context)"""
-
-
-
 
 
 def getResults(searchTerm):
