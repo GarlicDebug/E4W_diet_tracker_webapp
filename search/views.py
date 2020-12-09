@@ -1,33 +1,51 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView
-from django.db.models import Q
 import pandas as pd
 import requests
-
-
+from .models import Product
+from django.http import HttpResponse, HttpResponseRedirect
 
 class HomePageView(TemplateView):
     template_name = 'home.html'
 
 class SearchResultsView(ListView):
-    def main_view(request):
-        query = request.GET.get('searchValue')
-        dffinal2 = getResults(query)
-        print(dffinal2)
-
     template_name = 'search_results.html'
+    model = Product
+    def get_queryset(self):
+        query = self.request.GET.get('searchValue')
+        print(query)
+        df = getResults(query)
+        #df = str(df.to_html())
+        return render('search_results.html', {'df': df.to_html()})
+    """    
     def get_queryset(self):
         query = self.request.GET.get('searchValue') #HERE IS WHERE WE GET THE VALUE
+
         dffinal = getResults(query)                  #FROM THE SEARCH BAR
-        """EVERYTHING'S GOOD UPTO HERE"""
-        return render(dffinal, "search_results.html")
-        #return GettingNutritionValue.objects.all()
-    """def get_queryset(self):  # new
-        query = self.request.GET.get('q')
-        object_list = FoodResults.objects.filter(
-            Q(fdcId__icontains=query)
-        )
-        return object_list"""
+
+        #dffinal is a dataframe
+
+        #EVERYTHING'S GOOD UPTO HERE
+        context = {'table_content': str(dffinal.to_html())}
+        df = dffinal.to_html()
+        return render('search_results.html', )
+        #return render(dffinal.to_html(), 'search_results.html')"""
+    """def get_queryset(self):
+        query = self.request.GET.get('searchValue')
+        query = getResults(query)
+        context = {'table_content': query.to_html()}
+        return render('search_results.html', context)"""
+    """
+    def mainview(request):
+
+        query = request.GET.get('searchValue')
+        print(query)
+        data = getResults(query)
+        context = { 'df': data.to_html}
+        return render(request, 'templates/search_results.html', context)"""
+
+
+
 
 
 def getResults(searchTerm):
@@ -70,11 +88,11 @@ def getResults(searchTerm):
     col3 = []
     for n, g in df:
         col3.append(g['nutrient']['unitName'])
-
     dffinal = pd.DataFrame({
                 'Nutrient': col1,
                 'Amount': col2,
-                'unit': col3 })
+                'Unit': col3,
+    })
     return dffinal
 
 
