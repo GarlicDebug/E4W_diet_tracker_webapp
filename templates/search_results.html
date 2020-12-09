@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action="{% url 'search_results'%}" method="get">
+        Search: <input name="searchValue" type="text" placeholder="Enter the product name">
+        <!-- <button type="submit" value="Submit"><i class="fa fa-search"></i></button>
+        -->
+        <input type="submit" value="Submit">
+    </form>
+    <h1> Search Results</h1>
+    <ul>
+        Something here
+        {%  for x in object_list %}
+            <li>
+                {{ x.product_nutrient }}, {{ x.product_amount }}, {{ x.product_unit }}
+            </li>
+        {%  endfor %}
+    </ul>
+
+
+</body>
+</html>
