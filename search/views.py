@@ -1,9 +1,7 @@
-from django.shortcuts import render
 from django.views.generic import TemplateView, ListView
 import pandas as pd
 import requests
-from .models import Product
-from django.http import HttpResponse, HttpResponseRedirect
+from search.models import Product
 
 class HomePageView(TemplateView):
     template_name = 'home.html'
@@ -11,12 +9,7 @@ class HomePageView(TemplateView):
 class SearchResultsView(ListView):
     template_name = 'search_results.html'
     model = Product
-    #if TemplateView use the method below
-    """def get(self, *args, **kwargs):
-        query = self.request.GET.get('searchValue')
-        print(query)
-        df = getResults(query)
-        return render('search_results.html', {'df': df.to_html()})"""
+
     def get_queryset(self):
         query = self.request.GET.get('searchValue')
         df = getResults(query)
@@ -26,21 +19,7 @@ class SearchResultsView(ListView):
             product_amount=df['Amount'][count],
             product_unit=df['Unit'][count],
         ) for count in range(len(df['Nutrient']))]
-        print("howdy")
-        modelfinal = Product.objects.bulk_create(model_instances)
-        print("yolo")
-        print(modelfinal)
-        #return render('search_results.html', {'df': df})
         return model_instances
-
-    """
-    def mainview(request):
-
-        query = request.GET.get('searchValue')
-        print(query)
-        data = getResults(query)
-        context = { 'df': data.to_html}
-        return render(request, 'templates/search_results.html', context)"""
 
 
 def getResults(searchTerm):

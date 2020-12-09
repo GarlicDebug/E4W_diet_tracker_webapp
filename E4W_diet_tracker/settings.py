@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-print(os.environ['PATH'])
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -55,7 +54,6 @@ ROOT_URLCONF = 'E4W_diet_tracker.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        #'DIRS': [str(BASE_DIR.joinpath('templates'))],
         'DIRS': [os.path.join(os.path.normpath(os.path.dirname(__file__))), 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {

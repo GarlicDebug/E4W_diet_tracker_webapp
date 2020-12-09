@@ -13,16 +13,14 @@
         <input type="submit" value="Submit">
     </form>
     <h1> Search Results</h1>
-    <table>
+    <ul>
         Something here
-        {%  for x in model_instances %}
-            Plus two
-            <tr>
-                <td>{{ x }}</td>
-                <td> Plus one</td>
-            </tr>
+        {%  for x in object_list %}
+            <li>
+                {{ x.product_nutrient }}, {{ x.product_amount }}, {{ x.product_unit }}
+            </li>
         {%  endfor %}
-    </table>
+    </ul>
 
 
 </body>
