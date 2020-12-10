@@ -24,6 +24,8 @@ class SearchResultsView(ListView):
         ) for count in range(len(df['Nutrient']))]
 
         return model_instances
+    #make a function to get a string.
+
 
 class CompareResultsView(ListView):
     template_name = 'compare_results.html'
@@ -59,9 +61,15 @@ def getResults(searchTerm):
     ###I2qpT9BiYjXAbynCBVRHV9X5XsWbHi6eQtHIgC1b
 
     #Below finds the fdcId needed
+    errordb = pd.DataFrame({"Nutrient": ["Error"],
+                            "Amount": ["Retype again"],
+                            "Unit": ["Input Invalid"],})
     fdcId = ""
     if len(searchValueinList) == 1:
         fdcId = requests.get(f"https://api.nal.usda.gov/fdc/v1/foods/search?query={searchValueinList[0]}&pageSize=1&api_key=I2qpT9BiYjXAbynCBVRHV9X5XsWbHi6eQtHIgC1b")
+        if fdcId.status_code == 400:
+            return errordb
+
     else:
         quickstr = ""
         for x in range(len(searchValueinList)):
@@ -71,6 +79,10 @@ def getResults(searchTerm):
 
     #fdcId = requests.get("https://api.nal.usda.gov/fdc/v1/foods/search?query=cheddar%20cheese&pageSize=1&api_key=I2qpT9BiYjXAbynCBVRHV9X5XsWbHi6eQtHIgC1b")
     fdcId_dict = fdcId.json()
+    try:
+        fdcId_dict['foods'][0]
+    except IndexError:
+        return errordb
     fdcID = fdcId_dict['foods'][0]['fdcId']
 
     #Below uses the fdcId found to search for a product's nutritions

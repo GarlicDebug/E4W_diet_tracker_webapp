@@ -6,8 +6,16 @@
     <title>Title</title>
 </head>
 <body>
+    <form action="{%  url 'home' %}">
+        <input type="submit" value="Home">
+    </form>
     <form action="{%  url 'login' %}">
         <input type="submit" value="Login">
+    </form>
+    <form action="{% url 'compare_results'%}" method="get">
+        Compare two products: <input name="compareValue1" type="text" placeholder="Enter the first product">
+        <input name="compareValue2" type="text" placeholder="Enter the first product">
+        <input type="submit" value="Submit">
     </form>
     <form action="{% url 'search_results'%}" method="get">
         Search: <input name="searchValue" type="text" placeholder="Enter the product name">
