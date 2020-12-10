@@ -2,6 +2,7 @@ from django.views.generic import TemplateView, ListView
 import pandas as pd
 import requests
 from search.models import Product
+from search.models import Compare
 
 class HomePageView(TemplateView):
     template_name = 'home.html'
@@ -9,17 +10,27 @@ class HomePageView(TemplateView):
 class SearchResultsView(ListView):
     template_name = 'search_results.html'
     model = Product
+    model1 = Compare
 
     def get_queryset(self):
         query = self.request.GET.get('searchValue')
+        query2 = self.request.GET.get('compareValue')
         df = getResults(query)
+        df2 = getResults(query2)
         df = df.to_dict()
+        df2 = df2.to_dict()
         model_instances = [Product(
             product_nutrient=df['Nutrient'][count],
             product_amount=df['Amount'][count],
             product_unit=df['Unit'][count],
         ) for count in range(len(df['Nutrient']))]
-        return model_instances
+        model_compare = [Compare(
+            product_nutrient=df2['Nutrient'][count],
+            product_amount=df['Amount'][count],
+            product_unit=df['Unit'][count],
+        )for count in range(len(df2['Nutrient']))]
+        return model_instances, model_compare
+
 
 
 def getResults(searchTerm):
@@ -67,6 +78,8 @@ def getResults(searchTerm):
                 'Amount': col2,
                 'Unit': col3,
     })
+    dffinal = dffinal.sort_values(by='Nutrient')
+    dffinal = dffinal[dffinal['Nutrient'].str[0].str.isalpha()].reset_index(drop=True)
     return dffinal
 
 

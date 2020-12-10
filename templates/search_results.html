@@ -13,16 +13,34 @@
         Search: <input name="searchValue" type="text" placeholder="Enter the product name">
         <!-- <button type="submit" value="Submit"><i class="fa fa-search"></i></button>
         -->
+        Compare: <input name="compareValue" type="text" placeholder="Another product for comparison">
         <input type="submit" value="Submit">
     </form>
     <h1> Search Results</h1>
-    <ul>
-        {%  for x in object_list %}
-            <li>
-                {{ x.product_nutrient }}, {{ x.product_amount }}, {{ x.product_unit }}
-            </li>
-        {%  endfor %}
-    </ul>
+    <div class="container">
+        <div class="row">
+            <div class="column" style="background-color:#61A5FF;">
+                <h2> Name of first product</h2>
+                <ul>
+                    {%  for x in object_list.0 %}
+                    <li>
+                        {{ x.product_nutrient }}, {{ x.product_amount }}, {{ x.product_unit }}
+                    </li>
+                    {%  endfor %}
+                </ul>
+            </div>
+            <div class="column" style="background-color: #61A5FF;">
+                <h2> Name of second product </h2>
+                <ul>
+                    {%  for x in object_list.1 %}
+                    <li>
+                        {{ x.product_nutrient }}, {{ x.product_amount }}, {{ x.product_unit }}
+                    </li>
+                    {%  endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
 
 
 </body>
