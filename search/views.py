@@ -12,28 +12,8 @@ class SearchResultsView(ListView):
     model = Product
     model1 = Compare
 
-    def get_queryset(self, compareValue=None):
+    def get_queryset(self):
         query = self.request.GET.get('searchValue')
-        model_compare =""
-        if compareValue is None:
-            ""
-        else:
-            df = getResults(query)
-            df = df.to_dict()
-            model_instances = [Product(
-                product_nutrient=df['Nutrient'][count],
-                product_amount=df['Amount'][count],
-                product_unit=df['Unit'][count],
-            ) for count in range(len(df['Nutrient']))]
-            query2 = self.request.GET.get('compareValue')
-            df2 = getResults(query2)
-            df2 = df2.to_dict()
-            model_compare = [Compare(
-                product_nutrient=df2['Nutrient'][count],
-                product_amount=df2['Amount'][count],
-                product_unit=df2['Unit'][count],
-            ) for count in range(len(df2['Nutrient']))]
-
         df = getResults(query)
         df = df.to_dict()
 
@@ -43,8 +23,33 @@ class SearchResultsView(ListView):
             product_unit=df['Unit'][count],
         ) for count in range(len(df['Nutrient']))]
 
-        return model_instances, model_compare
+        return model_instances
 
+class CompareResultsView(ListView):
+    template_name = 'compare_results.html'
+    model = Product
+    model1 = Compare
+
+    def get_queryset(self):
+        query = self.request.GET.get('compareValue1')
+        query2 = self.request.GET.get('compareValue2')
+        df2 = getResults(query2)
+        df2 = df2.to_dict()
+        model_compare = [Compare(
+            product_nutrient=df2['Nutrient'][count],
+            product_amount=df2['Amount'][count],
+            product_unit=df2['Unit'][count],
+        ) for count in range(len(df2['Nutrient']))]
+
+        df = getResults(query)
+        df = df.to_dict()
+        model_instances = [Product(
+            product_nutrient=df['Nutrient'][count],
+            product_amount=df['Amount'][count],
+            product_unit=df['Unit'][count],
+        ) for count in range(len(df['Nutrient']))]
+
+        return model_instances, model_compare
 
 
 def getResults(searchTerm):

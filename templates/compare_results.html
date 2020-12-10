@@ -9,11 +9,12 @@
     <form action="{%  url 'login' %}">
         <input type="submit" value="Login">
     </form>
-    <form action="{% url 'search_results'%}" method="get">
-        Search: <input name="searchValue" type="text" placeholder="Enter the product name">
+    <form action="{% url 'compare_results'%}" method="get">
+        Compare two products: <input name="compareValue1" type="text" placeholder="Enter the first product">
+        <input name="compareValue2" type="text" placeholder="Enter the first product">
         <input type="submit" value="Submit">
     </form>
-    <h1> Search Results</h1>
+    <h1> Compare Results</h1>
     <script>
         function getURL(){
             return window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi)
@@ -24,6 +25,7 @@
             <div class="column" style="background-color:#61A5FF;">
                 <script>
                     var searchurl = getURL()["searchValue"]
+                    var compareurl = getURL()
                 </script>
                 <h2>
                     <script>
@@ -31,7 +33,21 @@
                     </script>
                 </h2>
                 <ul>
-                    {%  for x in object_list %}
+                    {%  for x in object_list.0 %}
+                    <li>
+                        {{ x.product_nutrient }}, {{ x.product_amount }}, {{ x.product_unit }}
+                    </li>
+                    {%  endfor %}
+                </ul>
+            </div>
+            <div class="column" style="background-color: #61A5FF;">
+                <h2>
+                    <script>
+                        document.write(compare)
+                    </script>
+                </h2>
+                <ul>
+                    {%  for x in object_list.1 %}
                     <li>
                         {{ x.product_nutrient }}, {{ x.product_amount }}, {{ x.product_unit }}
                     </li>

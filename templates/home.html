@@ -12,10 +12,12 @@
         <input type="submit" value="Login">
     </form>
     <form action="{% url 'search_results'%}" method="get">
-        Search: <input name="searchValue" type="text" placeholder="Search a single product">
-        <!-- <button type="submit" value="Submit"><i class="fa fa-search"></i></button>
-        -->
-        Compare(optional): <input name="compareValue" type="text" placeholder="Another product for comparison">
+        Search one product: <input name="searchValue" type="text" placeholder="Enter the product name">
+        <input type="submit" value="Submit">
+    </form>
+    <form action="{% url 'compare_results'%}" method="get">
+        Compare two products: <input name="compareValue1" type="text" placeholder="Enter the first product">
+        <input name="compareValue2" type="text" placeholder="Enter the first product">
         <input type="submit" value="Submit">
     </form>
 </body>
