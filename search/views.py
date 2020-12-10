@@ -12,23 +12,37 @@ class SearchResultsView(ListView):
     model = Product
     model1 = Compare
 
-    def get_queryset(self):
+    def get_queryset(self, compareValue=None):
         query = self.request.GET.get('searchValue')
-        query2 = self.request.GET.get('compareValue')
+        model_compare =""
+        if compareValue is None:
+            ""
+        else:
+            df = getResults(query)
+            df = df.to_dict()
+            model_instances = [Product(
+                product_nutrient=df['Nutrient'][count],
+                product_amount=df['Amount'][count],
+                product_unit=df['Unit'][count],
+            ) for count in range(len(df['Nutrient']))]
+            query2 = self.request.GET.get('compareValue')
+            df2 = getResults(query2)
+            df2 = df2.to_dict()
+            model_compare = [Compare(
+                product_nutrient=df2['Nutrient'][count],
+                product_amount=df2['Amount'][count],
+                product_unit=df2['Unit'][count],
+            ) for count in range(len(df2['Nutrient']))]
+
         df = getResults(query)
-        df2 = getResults(query2)
         df = df.to_dict()
-        df2 = df2.to_dict()
+
         model_instances = [Product(
             product_nutrient=df['Nutrient'][count],
             product_amount=df['Amount'][count],
             product_unit=df['Unit'][count],
         ) for count in range(len(df['Nutrient']))]
-        model_compare = [Compare(
-            product_nutrient=df2['Nutrient'][count],
-            product_amount=df['Amount'][count],
-            product_unit=df['Unit'][count],
-        )for count in range(len(df2['Nutrient']))]
+
         return model_instances, model_compare
 
 
