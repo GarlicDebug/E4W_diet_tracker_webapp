@@ -15,6 +15,8 @@ class SearchResultsView(ListView):
     def get_queryset(self):
         query = self.request.GET.get('searchValue')
         df = getResults(query)
+        dfstring = getNutrientString(df)
+        print(dfstring)
         df = df.to_dict()
 
         model_instances = [Product(
@@ -52,6 +54,14 @@ class CompareResultsView(ListView):
         ) for count in range(len(df['Nutrient']))]
 
         return model_instances, model_compare
+
+def getNutrientString(dataframe):
+    string1 = str(dataframe[dataframe['Nutrient'] == 'Protein'].values)
+    string2 = str(dataframe[dataframe['Nutrient'] == 'Cholesterol'].values)
+    string3 = str(dataframe[dataframe['Nutrient'] == 'Carbohydrate, by difference'].values)
+    string4 = str(dataframe[dataframe['Nutrient'] == 'Total lipid(fat)'].values)
+    stringfinal = "{}, {}, {}, {}.".format(string1, string2, string3, string4)
+    return stringfinal
 
 
 def getResults(searchTerm):
