@@ -12,7 +12,8 @@ def meal_logView(request):
 
 def addMeal(request):
     form = request.POST
-    new_meal = Meal(user=request.user, date=form['date'], time=form['time'], description=form['description'])
+    new_meal = Meal(user=request.user, date=form['date'], time=form['time'],
+                    description=form['description'], quantity=form['quantity'])
     new_meal.save()
     return HttpResponseRedirect('/meallog/')
 
