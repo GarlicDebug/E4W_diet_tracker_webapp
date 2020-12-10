@@ -1,4 +1,16 @@
-<h1>this is the meals page.</h1>
+<title>Meal Log</title>
+<h1>Your Meal Log</h1>
+<a href="http://127.0.0.1:8000/">home</a>
+<a href="http://127.0.0.1:8000/logout/">logout</a>
+
+<form action="/addMeal/" method="post">{% csrf_token %}
+    <input type="text" name="date" placeholder="Date"/>
+    <input type="text" name="time" placeholder="Time"/>
+    <input type="text" name="description" placeholder="What did you eat?"/>
+    <input type="text" name="quantity" placeholder="How much?"/>
+    <input type="submit" value="Add"/>
+</form>
+
 
 <ul>
     {% for all_meals in all_items %}
@@ -8,6 +20,7 @@
                     <th>{{ all_meals.date }}</th>
                     <th>{{ all_meals.time }}</th>
                     <th>{{ all_meals.description }}</th>
+                    <th>{{ all_meals.quantity }}</th>
                 </tr>
             </table>
             <form action="/deleteMeal/{{all_meals.id}}"
@@ -19,9 +32,3 @@
     {% endfor %}
 </ul>
 
-<form action="/addMeal/" method="post">{% csrf_token %}
-    <input type="text" name="date"/>
-    <input type="text" name="time"/>
-    <input type="text" name="description"/>
-    <input type="submit" value="Add"/>
-</form>

@@ -7,3 +7,4 @@ class Meal(models.Model):
     date = models.TextField()
     time = models.TextField()
     description = models.TextField()
+    quantity = models.TextField()
