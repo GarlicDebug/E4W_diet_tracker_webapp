@@ -6,6 +6,9 @@
     <title>Title</title>
 </head>
 <body>
+    <form action="{%  url 'login' %}">
+        <input type="submit" value="Login">
+    </form>
     <form action="{% url 'search_results'%}" method="get">
         Search: <input name="searchValue" type="text" placeholder="Enter the product name">
         <!-- <button type="submit" value="Submit"><i class="fa fa-search"></i></button>
@@ -14,7 +17,6 @@
     </form>
     <h1> Search Results</h1>
     <ul>
-        Something here
         {%  for x in object_list %}
             <li>
                 {{ x.product_nutrient }}, {{ x.product_amount }}, {{ x.product_unit }}
