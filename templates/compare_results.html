@@ -69,35 +69,7 @@
 	</style>
 </head>
 <body>
-    <script>
-        function getURL(){
-            return window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi)
-        }
-    </script>
-    <div class="container">
-        <div class="row">
-            <div class="column" style="background-color:#61A5FF;">
-                <script>
-                    var searchurl = getURL()["searchValue"]
-                    var compareurl = getURL()
-                </script>
-                <h2>
-                    <script>
-                        document.getElementById(searchurl).innerHTML()
-                    </script>
-                </h2>
-
-            </div>
-            <div class="column" style="background-color: #61A5FF;">
-                <h2>
-                    <script>
-                        document.write(compare)
-                    </script>
-                </h2>
-            </div>
-        </div>
-    </div>
-
+    <a href="admin">Admin</a>
 
     <div class="container h-100">
 		<div class="d-flex justify-content-center h-100">
@@ -130,7 +102,7 @@
                         <div class="input-group mb-3">
                             <h5> Compare two products: </h5>
 							<input name="compareValue1" type="text" placeholder="Enter the first product">
-                        <input name="compareValue2" type="text" placeholder="Enter the first product">
+                        <input name="compareValue2" type="text" placeholder="Enter the second product">
 						</div>
                         <div class="d-flex justify-content-center mt-3 login_container">
                             <input class="btn login_btn" type="submit" value="Search">
@@ -156,13 +128,6 @@
 			</div>
 		</div>
 	</div>
-
-
-
-
-
-
-
 
 </body>
 </html>

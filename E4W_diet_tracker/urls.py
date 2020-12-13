@@ -20,7 +20,7 @@ from user_login.views import registerPage, loginPage, logoutUser
 
 urlpatterns = [
     path('', include('search.urls')),
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='admin'),
     path('meallog/', meal_logView, name='meals'),
     path('addMeal/', addMeal),
     path('deleteMeal/<int:todo_id>', deleteMeal),
