@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .models import Meal
+from search.views import getNutrientString, getResults
 
 
 # Create your views here.
@@ -13,7 +14,8 @@ def meal_logView(request):
 def addMeal(request):
     form = request.POST
     new_meal = Meal(user=request.user, date=form['date'], time=form['time'],
-                    description=form['description'], quantity=form['quantity'])
+                    description=form['description'], quantity=form['quantity'],
+                    nutrition=[getNutrientString(getResults(form['description']))])
     new_meal.save()
     return HttpResponseRedirect('/meallog/')
 

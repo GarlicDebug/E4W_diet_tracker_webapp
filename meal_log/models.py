@@ -8,3 +8,4 @@ class Meal(models.Model):
     time = models.TextField()
     description = models.TextField()
     quantity = models.TextField()
+    nutrition = models.TextField()

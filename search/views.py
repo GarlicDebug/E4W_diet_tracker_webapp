@@ -3,6 +3,7 @@ import pandas as pd
 import requests
 from search.models import Product
 from search.models import Compare
+import re
 
 class HomePageView(TemplateView):
     template_name = 'home.html'
@@ -15,7 +16,6 @@ class SearchResultsView(ListView):
     def get_queryset(self):
         query = self.request.GET.get('searchValue')
         df = getResults(query)
-        dfstring = getNutrientString(df)
         df = df.to_dict()
 
         model_instances = [Product(
@@ -59,7 +59,11 @@ def getNutrientString(dataframe):
     string2 = str(dataframe[dataframe['Nutrient'] == 'Cholesterol'].values)
     string3 = str(dataframe[dataframe['Nutrient'] == 'Carbohydrate, by difference'].values)
     string4 = str(dataframe[dataframe['Nutrient'] == 'Total lipid(fat)'].values)
-    stringfinal = "{}, {}, {}, {}.".format(string1, string2, string3, string4)
+    stringfinal = "{}; {}; {}; {}".format(string1, string2, string3, string4)
+    stringfinal = re.sub('[\'\"\[\]]', "", stringfinal)
+    print(stringfinal)
+    if(stringfinal=="; ; ; "):
+        return "Nutrition information not found"
     return stringfinal
 
 
@@ -85,6 +89,8 @@ def getResults(searchTerm):
             quickstr += searchValueinList[0] + "%20"
         quickstr = quickstr[:-3]
         fdcId = requests.get(f"https://api.nal.usda.gov/fdc/v1/foods/search?query={quickstr}&pageSize=1&api_key=I2qpT9BiYjXAbynCBVRHV9X5XsWbHi6eQtHIgC1b")
+        if fdcId.status_code == 400:
+            return errordb
 
     #fdcId = requests.get("https://api.nal.usda.gov/fdc/v1/foods/search?query=cheddar%20cheese&pageSize=1&api_key=I2qpT9BiYjXAbynCBVRHV9X5XsWbHi6eQtHIgC1b")
     fdcId_dict = fdcId.json()

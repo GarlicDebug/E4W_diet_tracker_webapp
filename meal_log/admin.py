@@ -4,6 +4,6 @@ from django.contrib import admin
 from meal_log.models import Meal
 
 class MealAdmin(admin.ModelAdmin):
-    list_display = ('user', 'date', 'time', 'description', 'quantity')
+    list_display = ('user', 'date', 'time', 'description', 'quantity', 'nutrition')
 
 admin.site.register(Meal, MealAdmin)
