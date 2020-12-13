@@ -16,7 +16,6 @@ class SearchResultsView(ListView):
         query = self.request.GET.get('searchValue')
         df = getResults(query)
         dfstring = getNutrientString(df)
-        print(dfstring)
         df = df.to_dict()
 
         model_instances = [Product(
