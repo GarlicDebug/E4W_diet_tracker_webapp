@@ -76,7 +76,7 @@
 			<div class="user_card">
 				<div class="d-flex justify-content-center">
 
-					<h3 id="form-title">SEARCH RESULTS</h3>
+					<h3 id="form-title">COMPARE RESULTS</h3>
 				</div>
 				<div class="d-flex justify-content-center form_container">
                     <form action="{% url 'home' %}">
@@ -109,13 +109,22 @@
                         </div>
                     </form>
 				</div>
-                <ul>
-                    {%  for x in object_list %}
-                    <li>
-                        {{ x.product_nutrient }}, {{ x.product_amount }}, {{ x.product_unit }}
-                    </li>
-                    {%  endfor %}
-                </ul>
+                <div class="d-flex justify-content-center">
+                    <ul>
+                        {%  for x in object_list.0 %}
+                            <li>
+                                {{ x.product_nutrient }}, {{ x.product_amount }}, {{ x.product_unit }}
+                            </li>
+                        {%  endfor %}
+                    </ul>
+                    <ul>
+                        {%  for x in object_list.1 %}
+                            <li>
+                                {{ x.product_nutrient }}, {{ x.product_amount }}, {{ x.product_unit }}
+                            </li>
+                        {%  endfor %}
+                    </ul>
+                </div>
 			</div>
 		</div>
 	</div>

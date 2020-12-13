@@ -9,5 +9,11 @@ class Product(models.Model):
 
     def __str__(self):
         return "{} - {} {}".format(self.product_nutrient, self.product_amount, self.product_unit)
-    def returnString(self):
-        return "{} - {} {}".format(str(self.product_nutrient), str(self.product_amount), str(self.product_unit))
+
+class Compare(models.Model):
+    product_nutrient = models.TextField()
+    product_amount = models.TextField()
+    product_unit = models.TextField()
+
+    def __str__(self):
+        return "{} - {} {}".format(self.product_nutrient, self.product_amount, self.product_unit)
