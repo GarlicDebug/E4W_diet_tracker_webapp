@@ -25,7 +25,6 @@ class SearchResultsView(ListView):
         ) for count in range(len(df['Nutrient']))]
 
         return model_instances
-    #make a function to get a string.
 
 
 class CompareResultsView(ListView):
@@ -92,38 +91,31 @@ def getResults(searchTerm):
         if fdcId.status_code == 400:
             return errordb
 
-    #fdcId = requests.get("https://api.nal.usda.gov/fdc/v1/foods/search?query=cheddar%20cheese&pageSize=1&api_key=I2qpT9BiYjXAbynCBVRHV9X5XsWbHi6eQtHIgC1b")
     fdcId_dict = fdcId.json()
     try:
         fdcId_dict['foods'][0]
     except IndexError:
         return errordb
-    fdcID = fdcId_dict['foods'][0]['fdcId']
 
-    #Below uses the fdcId found to search for a product's nutritions
-    food = requests.get(f"https://api.nal.usda.gov/fdc/v1/food/{fdcID}?api_key=I2qpT9BiYjXAbynCBVRHV9X5XsWbHi6eQtHIgC1b")
-    food_dict = food.json()
+    df = pd.DataFrame(fdcId_dict['foods'][0]['foodNutrients'])
+    df = df.groupby('nutrientId')
 
-    #populate class with the dict
-    df = pd.DataFrame.from_dict(food_dict['foodNutrients'][0])
-    for i in range(1, len(food_dict['foodNutrients'])):
-        df = df.append(pd.DataFrame.from_dict(food_dict['foodNutrients'][i]))
-
-    df = df.groupby('id')
     col1 = []
     for n, g in df:
-        col1.append(str(g['nutrient']['name']))
+        col1.append(str(g['nutrientName']).split()[1].replace(",", ""))
     col2 = []
     for n, g in df:
-        col2.append(g['nutrient']['number'])
+        col2.append(str(g['value']).split()[1])
     col3 = []
     for n, g in df:
-        col3.append(g['nutrient']['unitName'])
+        col3.append(str(g['unitName']).split()[1])
+
     dffinal = pd.DataFrame({
                 'Nutrient': col1,
                 'Amount': col2,
                 'Unit': col3,
     })
+
     dffinal = dffinal.sort_values(by='Nutrient')
     dffinal = dffinal[dffinal['Nutrient'].str[0].str.isalpha()].reset_index(drop=True)
     return dffinal
