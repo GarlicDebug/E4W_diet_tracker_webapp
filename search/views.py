@@ -102,7 +102,8 @@ def getResults(searchTerm):
 
     col1 = []
     for n, g in df:
-        col1.append(str(g['nutrientName']).split()[1].replace(",", ""))
+        tempvar = str(g['nutrientName']).split()[1:-4]
+        col1.append(str(tempvar).translate({ord(i): None for i in "[']"}).replace(",,", ","))
     col2 = []
     for n, g in df:
         col2.append(str(g['value']).split()[1])
