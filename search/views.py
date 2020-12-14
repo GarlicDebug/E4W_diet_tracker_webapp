@@ -54,10 +54,11 @@ class CompareResultsView(ListView):
         return model_instances, model_compare
 
 def getNutrientString(dataframe):
-    string1 = str(dataframe[dataframe['Nutrient'] == 'Protein'].values)
-    string2 = str(dataframe[dataframe['Nutrient'] == 'Cholesterol'].values)
-    string3 = str(dataframe[dataframe['Nutrient'] == 'Carbohydrate, by difference'].values)
-    string4 = str(dataframe[dataframe['Nutrient'] == 'Total lipid(fat)'].values)
+    string1 = str(dataframe[dataframe['Nutrient'] == 'Energy'].values)
+    string2 = str(dataframe[dataframe['Nutrient'] == 'Protein'].values)
+    string3 = str(dataframe[dataframe['Nutrient'] == 'Total, lipid, (fat)'].values)
+    string4 = str(dataframe[dataframe['Nutrient'] == 'Cholesterol'].values)
+
     stringfinal = "{}; {}; {}; {}".format(string1, string2, string3, string4)
     stringfinal = re.sub('[\'\"\[\]]', "", stringfinal)
     print(stringfinal)
